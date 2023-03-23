@@ -38,13 +38,20 @@ back_button_sprite_sheet = pygame.image.load(os.path.join(directory_button, "arr
 game_button_sprite_sheet = pygame.image.load(os.path.join(directory_button, "game/game.png")).convert_alpha()
 #button game
 
+memory_game_button_sprite_sheet = pygame.image.load(os.path.join(directory_button, "memory_game/memory_game.png")).convert_alpha()
+#memory game
+
+genius_game_button_sprite_sheet = pygame.image.load(os.path.join(directory_button, "genius/genius.png")).convert_alpha()
+#genius game
 
 #Loop controller
 mainLoop = True
 outsetLoop = True
 homeLoop = False
 loginhomeLoop = False
+menugameLoop = False
 memorygameLoop = False
+geniusgameLoop = False
 
 if __name__ == "__main__":
     while mainLoop:
@@ -63,7 +70,7 @@ if __name__ == "__main__":
 
             pygame.display.update()
 
-            sleep(3)
+            sleep(1) #after change value of sleep, because 1 second is a test
             outsetLoop = False
             homeLoop = True
 
@@ -94,12 +101,12 @@ if __name__ == "__main__":
 
             if three_risk_button.action:                
                 loginhomeLoop = True
-                sleep(0.3)
+                sleep(0.15)
                 homeLoop = False  
             
             if game_button.action:
-                memorygameLoop = True
-                sleep(0.3)
+                menugameLoop = True
+                sleep(0.15)
                 homeLoop = False
             
             pygame.draw.rect(screen, [0, 98, 255], pygame.Rect(0, 0, (screen.get_width()), (screen.get_height() / 10)))
@@ -129,7 +136,7 @@ if __name__ == "__main__":
             
             if back_button.action:                
                 homeLoop = True
-                sleep(0.3)
+                sleep(0.15)
                 loginhomeLoop = False
                 
             
@@ -139,7 +146,76 @@ if __name__ == "__main__":
             back_button.draw(screen)
 
             pygame.display.update()
+        
+        memory_game_button = Button(memory_game_button_sprite_sheet, (screen.get_width() / 5), (screen.get_height() / 2), 492, 466, 492, 466, (screen.get_width() / 5), (screen.get_height() / 4))
+        #memory game
+
+        genius_game_button = Button(genius_game_button_sprite_sheet, screen.get_width() - (screen.get_width() / 5), (screen.get_height() / 2), 794, 795, 794, 795, (screen.get_width() / 5), (screen.get_height() / 3))
+        #genius game
+        
+        fontmenugame = pygame.font.SysFont("arial", int(screen.get_height() / 20), True, True)
+
+        while menugameLoop:
+            pygame.display.set_caption("RECORDECH (Menu Game)")
+
+            screen.fill([255, 255, 255])
+            
+            # text gerator
+            memorygameFonts = 'JOGO DA MEMÓRIA'
+            memorygamefontsFormat = fontmenugame.render(memorygameFonts, True, (0, 0, 0))
+                #memory game text
+            geniusgameFonts = 'GENIUS'
+            geniusgamefontsFormat = fontmenugame.render(geniusgameFonts, True, (0, 0, 0))
+                #genius game text
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    menugameLoop = False
+                    mainLoop = False
+                    # close window
+                if event.type == pygame.VIDEORESIZE:
+                    #font words menu game
+                    fontmenugame = pygame.font.SysFont("arial", int(screen.get_height() / 20), True, True)
+                    
+                    back_button = Button(back_button_sprite_sheet, (screen.get_width() / 40), (screen.get_height() / 20), 32, 15, 32, 15, (screen.get_width() / 25), (screen.get_height() / 20))
+                    #back button
+
+                    memory_game_button = Button(memory_game_button_sprite_sheet, (screen.get_width() / 5), (screen.get_height() / 2), 492, 466, 492, 466, (screen.get_width() / 5), (screen.get_height() / 4))
+                    #memory game
+
+                    genius_game_button = Button(genius_game_button_sprite_sheet, screen.get_width() - (screen.get_width() / 5), (screen.get_height() / 2), 794, 795, 794, 795, (screen.get_width() / 5), (screen.get_height() / 3))
+                    #genius game
+         
+            if back_button.action:                
+                homeLoop = True
+                sleep(0.15)
+                menugameLoop = False
+            
+            if memory_game_button.action:
+                memorygameLoop = True
+                sleep(0.15)
+                menugameLoop = False
+            
+            if genius_game_button.action:
+                geniusgameLoop = True
+                sleep(0.15)
+                menugameLoop = False
+
+            # buttons draw on screen
+            back_button.draw(screen)
+            memory_game_button.draw(screen)
+            genius_game_button.draw(screen)
+            
+            screen.blit(memorygamefontsFormat, ((screen.get_width() / 12), (screen.get_height() / 4)))
+            screen.blit(geniusgamefontsFormat, ((screen.get_width() - (screen.get_width() / 3.9)), (screen.get_height() / 4)))
+            #show text on screen
+
+            pygame.display.update()
+        
+        
         while memorygameLoop:
+            #memory game
+
             pygame.display.set_caption("RECORDECH (Memory Game)")
 
             screen.fill([255, 255, 255])
@@ -149,14 +225,41 @@ if __name__ == "__main__":
                     memorygameLoop = False
                     mainLoop = False
                     # close window
+
                 if event.type == pygame.VIDEORESIZE:
                     back_button = Button(back_button_sprite_sheet, (screen.get_width() / 40), (screen.get_height() / 20), 32, 15, 32, 15, (screen.get_width() / 25), (screen.get_height() / 20))
-         
-            if back_button.action:                
-                homeLoop = True
-                sleep(0.3)
-                memorygameLoop = False
+                    #back button
             
+            if back_button.action:                
+                menugameLoop = True
+                sleep(0.15)
+                memorygameLoop = False
+                
+            back_button.draw(screen)
+
+            pygame.display.update()
+        while geniusgameLoop:
+            #memory game
+
+            pygame.display.set_caption("RECORDECH (Genius Game)")
+
+            screen.fill([255, 255, 255])
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    memorygameLoop = False
+                    mainLoop = False
+                    # close window
+
+                if event.type == pygame.VIDEORESIZE:
+                    back_button = Button(back_button_sprite_sheet, (screen.get_width() / 40), (screen.get_height() / 20), 32, 15, 32, 15, (screen.get_width() / 25), (screen.get_height() / 20))
+                    #back button
+            
+            if back_button.action:                
+                menugameLoop = True
+                sleep(0.15)
+                geniusgameLoop = False
+                
             back_button.draw(screen)
 
             pygame.display.update()
